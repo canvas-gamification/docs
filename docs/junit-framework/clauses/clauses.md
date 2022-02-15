@@ -1,8 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
-# Clauses
+# Intro to Clauses
 
 ## What is a Clause?
 The core functionality of our framework revolves around the concept of "clauses". Put simply, a clause represents a segment of the output of a program that you may need to manipulate and test based on.
@@ -10,7 +10,6 @@ The core functionality of our framework revolves around the concept of "clauses"
 ## Which clauses are available?
 `StringLiteral()`
 `IntegerLiteral()`
-`DoubleLiteral()`
 `NewLine()`
 
 `RandomInteger()`
