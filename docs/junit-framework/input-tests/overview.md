@@ -24,6 +24,8 @@ The `runWithInput()` method is the heartbeat of the input tests and will allow y
 
 `runWithInput()` needs to be used within a parameterized test, and should be run within every test method in the test class.
 
+ Refer to [this document](./full-example) about how to create a test using Injections for a program that asks the user for input and displays output.
+
 ## [Clause Injection](./clause-injection)
 
-This is a feature that is to be used when there are clauses in the output that depend on the input of the program. For example, a program that asks the user for two numbers and then prints the sum will not only need inputs but also the result that depends on the inputs entered. Refer to [this document](./full-example) about how to create a test using Injections for a program that asks the user for input and displays output.
+This is a feature that can be used when the output of the program contains part of or the entire input entered.
