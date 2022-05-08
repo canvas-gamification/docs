@@ -44,6 +44,7 @@ import global.tools.TestOption;
 import global.variables.Clause;
 import global.variables.clauses.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -71,30 +72,18 @@ public class ExampleTest extends BaseTest {
         Example.main(new String[0]);
     }
 
-    // Helper method to join all inputs with line separator
-    public static String joinInputs(String... inputs) {
-        StringBuilder builder = new StringBuilder();
-        for (String input : inputs) {
-            builder.append(input).append(System.lineSeparator());
-        }
-        return builder.toString();
-    }
-
     // Set up custom inputs
-    static Stream<String> inputProvider() {
-        return Stream.of(joinInputs("5", "3"), joinInputs("-1", "40"));
+    static Stream<Arguments> inputProvider() {
+        return Stream.of(Arguments.of("5", "3"), Arguments.of("-1", "40"));
     }
 
     @ParameterizedTest
     @MethodSource("inputProvider")
-    void testWithInput(String input) {
+    void testWithInput(String num1, String num2) throws InvalidClauseException {
         // run the class with input
-        runWithInput(input);
+        runWithInput( num1 + System.lineSeparator() + num2 );
 
-        // get individual inputs and calculate sum
-        String[] inputs = input.split(System.lineSeparator());
-
-        int sum = Integer.parseInt(inputs[0]) + Integer.parseInt(inputs[1]);
+        int sum = Integer.parseInt(num1) + Integer.parseInt(num2);
 
         assertEquals(getItemByName("sum"), String.valueOf(sum));
     }

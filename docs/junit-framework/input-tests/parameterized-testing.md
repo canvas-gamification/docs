@@ -77,4 +77,38 @@ To run a simple program with input that doesn't have output that includes the in
     }
 ```
 
+:::tip Freestyle
+We use the method called `inputProvider()` to generate the inputs for the tests, but you can also use any other method that returns a `Stream<String>` to run the tests. This is particularly useful when you want to run tests with different cases of inputs.
+:::
+
+## Parameterized Tests with Multiple Inputs
+
+For the case where you want to run tests with multiple inputs, you can use the `Arguments.of()` method to create a `Stream<Arguments>` that will be passed to the test instead of a single input. For example:
+
+```java
+static Stream<Arguments> inputProvider() {
+         return Stream.of(Arguments.of("5", "3"), Arguments.of("-1", "40"));
+    }
+```
+
+:::caution Import
+You need to import the `Arguments` class in your test class like so:
+
+```java
+import org.junit.jupiter.params.provider.Arguments;
+```
+
+:::
+
+The parameterized tests will then look like so:
+
+```java
+    @ParameterizedTest
+    @MethodSource("inputProvider")
+    void testWithInput(String num1, String num2) throws InvalidClauseException {
+        runWithInput(num1 + System.lineSeparator() + num2); //This will run main with input and set the output
+        //...assert statements (like any other test)
+        // For the first case, num1 will be "5" and num2 will be "3", and so on.
+```
+
 For a full example of an input test look at [Full Examples](./full-example).
