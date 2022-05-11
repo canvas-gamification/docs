@@ -232,7 +232,7 @@ public Clause[] testSentence() {
 
 ### `PlaceHolder`
 
-A special clause that is the primary way to use injections in the tested program.
+A special clause that can have clause(s) "injected" in it's place. `PlaceHolder` is the primary way to use injections in the tested program.
 
 **Constructor:**
 
