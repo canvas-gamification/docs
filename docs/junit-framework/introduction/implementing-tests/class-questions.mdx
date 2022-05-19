@@ -1,0 +1,125 @@
+# Class/Object Oriented Programming Questions
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+These questions involve creating specific classes with properties mentioned in the question. While they can have output, they usually just have the student write the class definition.
+
+## Why is it hard to test this?
+
+Usually when we create objects in Java, we have to assume certain properties exist in the class. In the context of a student answer, we cannot assume that their answer has any of the proper properties defined correctly, so one naiive approach is to create objects and assume methods/properties already exist, then if our program encounters exceptions, we know that the student has not implemented the methods correctly. This is not very efficient, and relying on triggerring exceptions is not optimal, so the framework provides utilities that will check whether methods/properties exist and return boolean values instead of throwing exceptions.
+
+## How do I test this?
+
+- **Test Class**: The test class does not need to extend any class unless there is output/input involved. Do note that to use any of the methods mentioned below, the test class should inport `global.utils.ClassUtil`. For more information on the available methods see [ClassUtil](junit-framework/class-util.md).
+- **Tests**: Using the methods from `ClassUtil`, you can write tests that check whether the class has the correct methods and properties.
+
+## Example
+
+### Question
+
+ Write a class called Bubble with the following properties:
+
+- 3 private integer variables called radius, x, and y
+- A parameterized constructor that takes in one integer variable for the radius, and sets the radius to that value.
+x and y should be set to 0.
+- Another parameterized constructor that takes two integer values for x and y and sets them accordingly. The radius
+should be initialized to 1.
+- Another parameterized constructor that takes in 3 integers for the radius, x and y
+- Getters and setters for all 3 values
+- A method called `getArea()` that returns the area of the circle
+
+Answer:
+
+```java
+public class Bubble {
+    private int radius;
+    private int x;
+    private int y;
+
+    public Bubble(int radius) {
+        this.radius = radius;
+        this.x = 0;
+        this.y = 0;
+    }
+
+    public Bubble(int x, int y) {
+        this.radius = 1;
+        this.x = x;
+        this.y = y;
+    }
+
+    public Bubble(int radius, int x, int y) {
+        this.radius = radius;
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+}
+```
+
+- **What to test**: Whether the correct variables and methods are defined.
+- **Common mistakes**: Not setting the variables correctly. Not setting default values in constructors. Not calculating area correctly.
+- **How the student could cheat the system**: The student could make minimal constructors and omit some methods if they know which methods are being tested, so it is important to test the whole class.
+
+### Test Class
+
+<Tabs>
+<TabItem value="Gamification Junit Framework" default> 
+
+```java
+mport global.utils.ClassUtil;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class BubbleTest {
+    @Test
+    public void testBubbleAttr() {
+        assertTrue(ClassUtil.classHasAttribute(Bubble.class, "private int radius"), "Bubble class should have a radius attribute");
+    }
+
+    @Test
+    public void testBubbleMethods() {
+        assertTrue(ClassUtil.classHasMethods(Bubble.class, "public double getArea()", "public void setRadius(int)"), "Bubble class should have a getArea method");
+    }
+
+    @Test
+    public void testBubbleConstructors() {
+        assertTrue(ClassUtil.classHasConstructor(Bubble.class, "Bubble(int,int)"), "Bubble class should have a two parameter constructor");
+    }
+
+    // Other tests as necessary
+}
+```
+</TabItem>
+</Tabs>

@@ -1,0 +1,90 @@
+# `Random` Questions
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+These questions involve random values and require the use of the `Random` class or `Math.random()` method in Java.
+
+## Why is it hard to test this?
+
+These types of questions usually have varying output and the output depends on the random values generated. This means that both output format and randomness of the values need to be tested.
+
+## How do I test this?
+
+- **Test Class**: Create a class that extends the **`BaseRandomTest` class**.
+- **Test Sentence**: Create the [`testSentence()`](/junit-framework/writing-tests.md#testsentence) method with the output format as an array of [`Clause`](/junit-framework/clauses/clauses.md) objects, including random clauses where necessary with the appropriate limits and names.
+- **Call Main**: Call the main method of the test class by implementing the [`runMain()`](/junit-framework/writing-tests.md#runmain) method.
+- **Retrieve Values**: Retrieve output values based on the format. See [Retrieving Values](/junit-framework/retrieving-values.md) for more information.
+- **Additional Tests**: Depending on the question, you may need to create additional tests to ensure values are calculated correctly.
+
+Once you extend the `BaseRandomTest` class, the framework automatically looks for Random clauses in the test sentence and checks whether each clause is within the specified range, and whether the clause is randomly generated. It does this by running the program multiple times and evaluating the distribution of random values in the output.
+
+## Example
+
+### Question
+
+Make a program that calculates and prints the body mass index (BMI) of a person given their weight in kilograms and height in metres. The formula for BMI is `BMI = weigth/(height * height)`. In the same program, set the height to a random value between 1.0 and 2.5 and the weight to a random value between 65 and 105.
+
+Sample Output:
+
+```
+Height: 1.75
+Weight: 70.0
+BMI: 24.9
+```
+
+Answer:
+
+```java
+public class BMICheck {
+    public static void main(String[] args) {
+        double height = (Math.random() * 2.5) + 1.0;
+        double weight = (Math.random() * (40)) + 65;
+        double bmi = weight / (height * height);
+        System.out.println("Height: " + height);
+        System.out.println("Weight: " + weight);
+        System.out.println("BMI: " + bmi);
+    }
+}
+```
+
+- **What to test**: Output follows the correct format. Random Values are generated and used to calculate the BMI properly.
+- **Common mistakes**: Not setting the variables correctly, and having the wrong data types. Not generating random values correctly in the specified range.
+- **How the student could cheat the system**: The student might cheat the system by simply printing the sample output to the console, thereby bypassing the need for random value generation.
+
+### Test Class
+
+<Tabs>
+<TabItem value="Gamification Junit Framework" default> 
+
+```java
+public class BMICheckTest extends BaseRandomTest {
+    public Clause[] testSentence() {
+        return new Clause[] {
+            new StringLiteral("Height: "),
+            new RandomDouble(1.5, 2.5, "height"),
+            new NewLine(),
+            new StringLiteral("Weight: "),
+            new RandomDouble(65, 105, "weight"),
+            new NewLine(),
+            new StringLiteral("BMI: "),
+            new DoubleLiteral("bmi"),
+        };
+    }
+
+    public void runMain() {
+        BMICheck.main(new String[0]);
+    }
+
+    @Test
+    public void bmiCalculatedCorrectly(){
+        double height = Double.parseDouble(getItemByName("height"));
+        double weight = Double.parseDouble(getItemByName("weight"));
+        double bmi = weight / (height * height);
+        double outputBMI = Double.parseDouble(getItemByName("bmi"))
+        assertEquals(outputBMI, bmi, "Your BMI has not been calculated correctly.");
+    }
+}
+```
+</TabItem>
+</Tabs>

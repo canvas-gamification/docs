@@ -1,0 +1,97 @@
+# Basic Output Questions
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+These are questions that require the user to print some text to the console. These are usually the simplest questions to test.
+
+## Why is it hard to test this?
+
+Usually these types of questions have specified output patterns, and without the framework, maintaining these patterns and retrieving values from the output stream is difficult.
+
+## How do I test this?
+
+- **Test Class**: Create a class that extends the `BaseTest` class.
+- **Test Sentence**: Create the [`testSentence()`](/junit-framework/writing-tests.md#testsentence) method with the output format as an array of [`Clause`](/junit-framework/clauses/clauses.md) objects.
+- **Call Main**: Call the main method of the test class by implementing the [`runMain()`](/junit-framework/writing-tests.md#runmain) method.
+- **Retrieve Values**: Retrieve output values based on the format. See [Retrieving Values](/junit-framework/retrieving-values.md) for more information.
+- **Additional Tests**: Depending on the question, you may need to create additional tests to ensure values are calculated correctly.
+
+## Example
+
+- Add tab for vanilla Junit 5 comparison
+
+### Question
+
+Make a program that calculates and prints the body mass index (BMI) of a person given their weight in kilograms and height in metres. The formula for BMI is `BMI = weigth/(height * height)`. In the same program, set the height to 1.65 and the weight to 77.
+
+Sample Output:
+
+```
+Height: 1.75
+Weight: 70.0
+BMI: 24.9
+```
+
+Answer:
+
+```java
+public class BMICheck {
+    public static void main(String[] args) {
+        double height = 1.75;
+        double weight = 70;
+        double bmi = weight / (height * height);
+        System.out.println("Height: " + height);
+        System.out.println("Weight: " + weight);
+        System.out.println("BMI: " + bmi);
+    }
+}
+```
+
+- **What to test**: Output follows the correct format.
+- **Common mistakes**: Not setting the variables correctly, and having the wrong data types.
+- **How the student could cheat the system**: The student might cheat the system by simply printing the sample output to the console. Questions like these are usually Parsons questions, which ensure that the student cannot manually print the solution.
+
+### Test Class
+
+<Tabs>
+<TabItem value="Gamification Junit Framework" default> 
+
+```java
+public class BMICheckTest extends BaseTest {
+    public Clause[] testSentence() {
+        return new Clause[] {
+            new StringLiteral("Height: "),
+            new DoubleLiteral("height"),
+            new NewLine(),
+            new StringLiteral("Weight: "),
+            new DoubleLiteral("weight"),
+            new NewLine(),
+            new StringLiteral("BMI: "),
+            new DoubleLiteral("bmi"),
+        };
+    }
+    public void runMain() {
+        BMICheck.main(new String[0]);
+    }
+    @Test
+    public void bmiCalculatedCorrectly(){
+        double height = 1.75;
+        double weight = 70;
+        double bmi = weight / (height * height);
+        double outputBMI = Double.parseDouble(getItemByName("bmi"))
+        assertEquals(outputBMI, bmi, "Your BMI has not been calculated correctly.");
+    }
+}
+```
+
+</TabItem>
+<TabItem value="Vanilla Junit 5"> 
+
+```java 
+ye
+```
+</TabItem>
+</Tabs>
+
+

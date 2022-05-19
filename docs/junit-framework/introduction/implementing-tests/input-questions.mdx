@@ -1,0 +1,24 @@
+# Questions requiring input from the user
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+These questions require Scanner input from the user and use the inputted values to calculate/print the correct output.
+
+## Why is it hard to test this?
+
+Not only do these questions require output format checking, but they also require input values, where the output values calculated might change depending on the input values. This is why multiple cases need to be tested, which is extremely tedious and redundant when working with Vanilla JUnit 5. With the framework, this is no longer necessary, and we can re-run the same test multiple times with different input values.
+
+## How do I test this?
+
+- **Test Class**: Create a class that extends the `BaseTest` class.
+- **Test Sentence**: Create the [`testSentence()`](/junit-framework/writing-tests.md#testsentence) method with the output format as an array of [`Clause`](/junit-framework/clauses/clauses.md) objects.
+- **Setup Test Options**: For any test that takes in input, the test writer must specify two values available in the [`TestOption`](/junit-framework/input-tests/test-option.md) class. These options also include setting the default input.
+- **Call Main**: Call the main method of the test class by implementing the [`runMain()`](/junit-framework/writing-tests.md#runmain) method.
+- **Set up input cases**: Write input providers that are a stream of input values used to run the code with multiple input. Refer to [Parameterized Testing](/junit-framework/input-tests/parameterized-testing.md) for more information.
+- **Retrieve Values**: Retrieve output values based on the format. See [Retrieving Values](/junit-framework/retrieving-values.md) for more information.
+- **Additional Tests**: Depending on the question, you may need to create additional tests to ensure values are calculated correctly.
+
+## Example
+
+Refer to [Sample Input Test](/junit-framework/input-tests/full-example.md#sample-input-test) for an example of how to write an input test.
