@@ -87,4 +87,77 @@ public class BMICheckTest extends BaseRandomTest {
 }
 ```
 </TabItem>
+<TabItem value="Vanilla Junit 5"> 
+
+```java 
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.*;
+
+public class BMITest {
+    private final InputStream systemIn = System.in;
+    private final PrintStream systemOut = System.out;
+
+    private ByteArrayInputStream testIn;
+    private ByteArrayOutputStream testOut;
+
+    @BeforeEach
+    public void setUpOutput() {
+        testOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(testOut));
+    }
+
+    private void provideInput(String data) {
+        testIn = new ByteArrayInputStream(data.getBytes());
+        System.setIn(testIn);
+    }
+
+    private String getOutput() {
+        return testOut.toString();
+    }
+
+    @AfterEach
+    public void restoreSystemInputOutput() {
+        System.setIn(systemIn);
+        System.setOut(systemOut);
+    }
+
+    @Test
+    public void OutputFollowsFormat() {
+        // This test doesn't even allow for retreival of output values easily and only partially tests the output.
+        BMICheck.main(new String[0]);
+        String actual = getOutput();
+        String format = "Your BMI is:";
+
+        assertTrue(actual.contains(format), "Your program does not match the output format. Try to check whether your output matches the sample.");
+    }
+
+    @Test
+    public void bmiCalculatedCorrectly() {
+        // This test needs to manually slice the string to retrieve the values
+        BMICheck.main(new String[0]);
+        String actual = getOutput();
+
+        // The following trimming is very tedious for more complex output cases, so having a defined format keeps things simple and clean
+        int index = actual.indexOf(":");
+        int nextIdx = actual.indexOf("Weight:", index + 1);
+        double height = Double.parseDouble(actual.substring(index + 1, nextIdx).trim());
+        int index = nextIdx;
+        int nextIdx = actual.indexOf("BMI:", index + 1);
+        double weight = Double.parseDouble(actual.substring(index + 1, nextIdx).trim());
+
+
+        double calculated = weight / Math.pow(height, 2);
+        String expected = "Your BMI is: " + calculated;
+
+        assertTrue(actual.contains(expected), "Your BMI method does not calculate the correct BMI.");
+    }
+
+    // To test whether random values are being generated, have to manually check whether the height and weight values
+    // are in the range specified by the question by running the program hundreds of times to see if it works, which becomes extremely tedious.
+}
+```
+</TabItem>
 </Tabs>
