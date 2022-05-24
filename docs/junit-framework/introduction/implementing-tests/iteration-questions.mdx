@@ -1,0 +1,161 @@
+# Questions with iteration
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+These are questions that require the user to print some text to the console in an iterative fashion. These types of tests are not too different from [Basic Output Questions](./basic-output).
+The only major difference is the method by which the the output structure is defined.
+
+## Why is it hard to test this?
+
+Usually these types of questions have specified output patterns, and without the framework, maintaining these patterns and retrieving values from the output stream is difficult.
+
+## How do I test this?
+
+- **Test Class**: Create a class that extends the `BaseTest` class.
+- **Test Sentence**: Create the [`testSentence()`](/junit-framework/writing-tests.md#testsentence) method with the output format as an array of [`Clause`](/junit-framework/clauses/clauses.md) objects.
+- **Call Main**: Call the main method of the test class by implementing the [`runMain()`](/junit-framework/writing-tests.md#runmain) method.
+- **Retrieve Values**: Retrieve output values based on the format. See [Retrieving Values](/junit-framework/retrieving-values.md) for more information.
+- **Additional Tests**: Depending on the question, you may need to create additional tests to ensure values are calculated correctly.
+
+## Example
+
+### Question
+
+Write a program that prints out the first 10 numbers in the Fibonacci sequence  (each on a different line).
+
+Sample Output:
+
+```
+1
+1
+2
+3
+...so on
+```
+
+Answer:
+
+```java
+public class FiboPrint {
+    public static void main(String[] args) {
+        int a = 1;
+        int b = 1;
+        int c = 0;
+        for (int i = 0; i < 10; i++) {
+            System.out.println(a);
+            c = a + b;
+            a = b;
+            b = c;
+        }
+    }
+}
+```
+
+- **What to test**: Output follows the correct format.
+- **Common mistakes**: Not printing all 10, errors with the calculation of Fibonacci numbers.
+- **How the student could cheat the system**: The student might cheat the system by simply printing the sample output to the console. Questions like these are usually Parsons questions, which ensure that the student cannot manually print the solution.
+
+### Test Class
+
+<Tabs>
+<TabItem value="Gamification Junit Framework" default> 
+
+```java
+import global.BaseTest;
+import global.variables.Clause;
+import global.variables.clauses.IntegerLiteral;
+import global.variables.clauses.NewLine;
+
+import java.util.ArrayList;
+
+public class FiboPrintTest extends BaseTest {
+    public Clause[] testSentence() {
+        ArrayList<Clause> sentence = new ArrayList<>();
+        int a = 1;
+        int b = 1;
+        int c = 0;
+        for (int i = 0; i < 10; i++) {
+            sentence.add(new IntegerLiteral(a));
+            sentence.add(new NewLine());
+            c = a + b;
+            a = b;
+            b = c;
+        }
+        return sentence.toArray(new Clause[sentence.size()]);
+    }
+
+    public void runMain() {
+        FiboPrint.main(new String[0]);
+    }
+}
+```
+
+</TabItem>
+<TabItem value="Vanilla Junit 5"> 
+
+```java
+
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.*;
+
+public class FiboPrintTest {
+    private final InputStream systemIn = System.in;
+    private final PrintStream systemOut = System.out;
+
+    private ByteArrayInputStream testIn;
+    private ByteArrayOutputStream testOut;
+
+    @BeforeEach
+    public void setUpOutput() {
+        testOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(testOut));
+    }
+
+    private void provideInput(String data) {
+        testIn = new ByteArrayInputStream(data.getBytes());
+        System.setIn(testIn);
+    }
+
+    private String getOutput() {
+        return testOut.toString();
+    }
+
+    @AfterEach
+    public void restoreSystemInputOutput() {
+        System.setIn(systemIn);
+        System.setOut(systemOut);
+    }
+
+    public String getFiboPrint(){
+        StringBuilder format = new StringBuilder();
+        int a = 1;
+        int b = 1;
+        int c = 0;
+        for (int i = 0; i < 10; i++) {
+            format.append(a).append(System.lineSeparator());
+            c = a + b;
+            a = b;
+            b = c;
+        }
+        return format.toString();
+    }
+
+    @Test
+    public void OutputFollowsFormat() {
+        // This test doesn't even allow for retreival of output values easily and only partially tests the output.
+        FiboPrint.main(new String[0]);
+        String actual = getOutput();
+        String format = getFiboPrint();
+
+        assertTrue(actual.contains(format), "Your program does not match the output format. Try to check whether your output matches the sample.");
+    }
+}
+```
+</TabItem>
+</Tabs>
+
+

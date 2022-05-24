@@ -1,0 +1,24 @@
+# Conditional Questions
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+These questions usually require Scanner input from the user and use the inputted values to conditionally change the output printed.
+
+## Why is it hard to test this?
+
+These types of questions not only require input values but also change the output based on the input, so multiple cases and multiple input values need to be handled.
+## How do I test this?
+
+- **Test Class**: Create a class that extends the `BaseTest` class.
+- **Test Sentence**: Create the [`testSentence()`](/junit-framework/writing-tests.md#testsentence) method with the output format as an array of [`Clause`](/junit-framework/clauses/clauses.md) objects.
+- **Setup Test Options**: For any test that takes in input, the test writer must specify two values available in the [`TestOption`](/junit-framework/input-tests/test-option.md) class. These options also include setting the default input.
+- **Call Main**: Call the main method of the test class by implementing the [`runMain()`](/junit-framework/writing-tests.md#runmain) method.
+- **Set up input cases**: Write input providers that are a stream of input values used to run the code with multiple input. Refer to [Parameterized Testing](/junit-framework/input-tests/parameterized-testing.md) for more information. Make an input provider for each case.
+- **Inject Clauses**: Since the output changes, the test sentence needs to be modified. Add `PlaceHolder` clauses to the test sentence that will be replaced with the correct output based on the input case. See [Clause Injection](/junit-framework/input-tests/clause-injection.md) for more information.
+- **Retrieve Values**: Retrieve output values based on the format. See [Retrieving Values](/junit-framework/retrieving-values.md) for more information.
+- **Additional Tests**: Depending on the question, you may need to create additional tests to ensure values are calculated correctly.
+
+## Example
+
+Refer to [Sample Input Test with Injections](/junit-framework/input-tests/full-example.md#sample-test-with-clause-injection) for an example of how to write a test with conditionals.
