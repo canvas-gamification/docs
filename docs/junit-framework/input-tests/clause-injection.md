@@ -139,4 +139,4 @@ return new Clause[]{
 
 So as we can see the injected clauses replace the `PlaceHolder` clauses in the test sentence in the order that they are defined. For this case, the first `PlaceHolder` clause is replaced with the input, and the second `PlaceHolder` clause is replaced with the prime status. This is an example with two `PlaceHolder` clauses, but usually you will only have one. Determine the number of `PlaceHolder` clauses in your test sentence and the number of input providers you need based on the question.
 
-For a full example of a test with injections look at [Full Examples](../full-example#sample-test-with-clause-injection).
+For a full example of a test with injections look at [Full Examples](./full-example#sample-test-with-clause-injection).

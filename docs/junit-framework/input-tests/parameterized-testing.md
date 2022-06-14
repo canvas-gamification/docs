@@ -111,4 +111,4 @@ The parameterized tests will then look like so:
         // For the first case, num1 will be "5" and num2 will be "3", and so on.
 ```
 
-For a full example of an input test look at [Full Examples](../full-example#sample-input-test).
+For a full example of an input test look at [Full Examples](./full-example#sample-input-test).
