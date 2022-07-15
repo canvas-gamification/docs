@@ -36,6 +36,8 @@ question involves randomness, which it should then extend `BaseRandomTest` )
 any input/output tests should be hardcoded, and if a method is required to compute a value for a test, it should be 
 coded by the test writer and not copied from the solution code. This helps catch any issues or discrepancies in the question.
 If a student method needs to be called, use the functions in `MethodUtil`
+- The tests written for the question must have good coverage, and should fail all incorrect code. However, the tests should
+also not be excessive, as the more test cases, the more points awarded to the student. 
 - All tests must have error/fail messages, and they must be complete, grammatically correct sentences with proper punctuation. 
 They should be relevant to the question, but the message should also not completely give away the answer to the student.
 
