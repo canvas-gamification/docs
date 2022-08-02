@@ -205,41 +205,38 @@ In the test above, we use the `incorrectStructureErrorMessage` property of `Test
 ### Question Class
 ```java
 /*
-Write a Java Program that asks the user for the radius of a circle as a double and then determines the area and
-circumference of the circle. Create two methods, one for the area called areaCalc, and one for the circumference called
-circCalc. Make sure the methods check if the parameter passed in is greater than 0, and return 0 if it is not. The
-main method of the program should also output the calculated area and circumference to two decimal places using printf.
-Ensure that your output matches the sample.
+Write a Java Program that asks the user for their height, then prints out if the user is above the average height in Canada
+or not (The average height in Canada is 168.7 cm). Write two methods to complete this, one method that asks the user for
+their height, and another method that determines and prints the user's classification. If the user provides an invalid
+height (one that is less than 0), the “heightChecker” method should print the error message "Invalid input!".
 Sample Output:
-    Enter the radius of the circle:
-    5
-    The area of the circle is: 78.54
-    The circumference of the circle is: 31.42
+    Please enter your height in cm:
+    179.38
+    You're above the average height in Canada!
  */
 
 import java.util.Scanner;
 
-public class RadOfCircle {
+public class AverageHeight {
     public static void main(String[] args) {
+        double height = userInput();
+        heightChecker(height);
+    }
+
+    public static double userInput() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the radius of the circle:");
-        double radius = input.nextDouble();
-        System.out.printf("The area of the circle is: %.2f\n", areaCalc(radius));
-        System.out.printf("The circumference of the circle is: %.2f\n", circCalc(radius));
+        System.out.println("Please enter your height in cm: ");
+        double in = input.nextDouble();
+        return in;
     }
 
-    public static double areaCalc(double a) {
-        if (!(a > 0))
-            return 0;
-        double x = Math.PI * Math.pow(a, 2);
-        return x;
-    }
-
-    public static double circCalc(double a) {
-        if (!(a > 0))
-            return 0;
-        double x = Math.PI * 2 * a;
-        return x;
+    public static void heightChecker(double height) {
+        if (height < 0)
+            System.out.println("Invalid input!");
+        else if (height > 168.7)
+            System.out.println("You're above the average height in Canada!");
+        else
+            System.out.println("You're below the average height in Canada!");
     }
 }
 ```
@@ -248,94 +245,89 @@ public class RadOfCircle {
 
 ```java
 import global.BaseTest;
+import global.exceptions.InvalidClauseException;
+import global.tools.CustomAssertions;
 import global.tools.TestOption;
+import global.utils.MethodUtil;
 import global.variables.Clause;
-import global.variables.clauses.DoubleLiteral;
 import global.variables.clauses.NewLine;
+import global.variables.clauses.PlaceHolder;
 import global.variables.clauses.StringLiteral;
-import global.variables.wrappers.Optional;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.Random;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class MainTest extends BaseTest {
-    // Java
+    // Parsons
     public Clause[] testSentence() {
         TestOption.isInputTest = true;
-        TestOption.defaultInput = "5.0";
+        TestOption.defaultInput = "170.0";
         return new Clause[]{
-                new StringLiteral("Enter the radius of the circle:"),
-                new Optional(new StringLiteral(" ")),
+                new StringLiteral("Please enter your height in cm: "),
                 new NewLine(),
-                new StringLiteral("The area of the circle is:"),
-                new Optional(new StringLiteral(" ")),
-                new DoubleLiteral("area"),
-                new NewLine(),
-                new StringLiteral("The circumference of the circle is:"),
-                new Optional(new StringLiteral(" ")),
-                new DoubleLiteral("circumference")
+                new PlaceHolder()
         };
     }
 
     public void runMain() {
-        RadOfCircle.main(new String[0]);
+        AverageHeight.main(new String[0]);
     }
 
-    static Stream<Arguments> inputProviderArea() {
-        return Stream.of(Arguments.of(5, 78.53981633974483), Arguments.of(0, 0.0), Arguments.of(-45.96, 0.0),
-                Arguments.of(429.83, 580421.2715948255));
+    static Stream<Arguments> heightCheckerInputProvider() {
+        return Stream.of(
+                Arguments.of(170.0, "You're above the average height in Canada!" + System.lineSeparator()),
+                Arguments.of(168.7, "You're below the average height in Canada!" + System.lineSeparator()),
+                Arguments.of(168.70001, "You're above the average height in Canada!" + System.lineSeparator()),
+                Arguments.of(-37, "Invalid input!" + System.lineSeparator()),
+                Arguments.of(149.23716, "You're below the average height in Canada!" + System.lineSeparator()),
+                Arguments.of(-0.0001, "Invalid input!" + System.lineSeparator()),
+                Arguments.of(0, "You're below the average height in Canada!" + System.lineSeparator())
+        );
     }
 
-    static Stream<Arguments> inputProviderCircumference() {
-        return Stream.of(Arguments.of(5, 31.41592653589793), Arguments.of(0, 0.0), Arguments.of(-45.96, 0.0),
-                Arguments.of(429.83, 2700.7015405850016));
+    static Stream<Double> userInputInputProvider() {
+        return Stream.of(170.0, 168.7, -37.00, 11.00, 87.345, -13.67);
     }
 
-    static Stream<Arguments> inputProviderOutputTest() {
-        return Stream.of(Arguments.of(5, 78.54, 31.42), Arguments.of(0, 0.0, 0.0), Arguments.of(-45.96, 0.0, 0.0),
-                Arguments.of(429.83, 580421.27, 2700.70));
-    }
-
-    @ParameterizedTest
-    @MethodSource("inputProviderArea")
-    void correctAreaCalcMethod(double radius, double area) {
-        String failMessage = "Your program does not have a method for calculating the area of a circle.";
-        double result = (double) invokeIfMethodExists(RadOfCircle.class, "areaCalc", failMessage, new Object[]{radius}, double.class);
-        assertEquals(result, area, 0.000001, "Your method does not correctly calculate the area of a circle.");
-    }
-
-    @ParameterizedTest
-    @MethodSource("inputProviderCircumference")
-    void correctCircCalcMethod(double radius, double circumference) {
-        String failMessage = "Your program does not have a method for calculating the circumference of a circle.";
-        double result = (double) invokeIfMethodExists(RadOfCircle.class, "circCalc", failMessage, new Object[]{radius}, double.class);
-        assertEquals(result, circumference, 0.000001, "Your method does not correctly calculate the circumference of a circle.");
+    static Stream<Arguments> mainMethodInputProvider() {
+        Random r = new Random();
+        return Stream.of(
+                Arguments.of(-0.001, "Invalid input!"),
+                Arguments.of(r.nextDouble(168.7), "You're below the average height in Canada!"),
+                Arguments.of(r.nextDouble(50) + 169, "You're above the average height in Canada!")
+        );
     }
 
     @ParameterizedTest
-    @MethodSource("inputProviderOutputTest")
-    void printsCorrectOutput(double radius, double area, double circumference) {
-        runWithInput(String.valueOf(radius));
-        assertEquals(Double.parseDouble(getItemByName("area")), area, 0.01, "Your program does not correctly output the area of a circle.");
-        assertEquals(Double.parseDouble(getItemByName("circumference")), circumference, 0.01, "Your program does not correctly output the circumference of a circle.");
+    @MethodSource("heightCheckerInputProvider")
+    void correctHeightCheckerMethod(double height, String message) throws Throwable {
+        MethodUtil.invokeIfMethodExists(AverageHeight.class, "heightChecker", new Object[]{height},
+                double.class);
+        String output = MethodUtil.getMethodOutput();
+        assertEquals(message, output, "Your heightChecker method does not print the correct message base on the input height.");
     }
 
-    public static Object invokeIfMethodExists(Class<?> methodClass, String methodName, String failMessage, Object[] arguments, Class<?>... methodArgumentTypes) {
-        try {
-            Method m = methodClass.getMethod(methodName, methodArgumentTypes);
-            return m.invoke(null, arguments);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            fail(failMessage);
-            return null;
-        }
+    @ParameterizedTest
+    @MethodSource("userInputInputProvider")
+    void correctUserInputMethod(double input) throws Throwable {
+        provideInput(String.valueOf(input));
+        Object output = MethodUtil.invokeIfMethodExists(AverageHeight.class, "userInput");
+        CustomAssertions._assertEquals(input, output, "Your userInput method does not correctly get input from the user.");
     }
 
+    @ParameterizedTest
+    @MethodSource("mainMethodInputProvider")
+    void printsOutputCorrectly(double height, String message) throws InvalidClauseException {
+        TestOption.incorrectStructureErrorMessage = "Your program does not print the correct message based on the input height.";
+        runWithInput(String.valueOf(height), new Clause[]{
+                new StringLiteral(message)
+        });
+    }
 }
 ```
