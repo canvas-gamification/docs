@@ -50,11 +50,11 @@ public DoubleLiteral(double lower, double upper, [String name]) {
 
 **Parameters:**
 
-| Name | Type | Description
-| :--- | --- | --- |
-| `lower` | `double` | The lower bound (inclusive) of values that this double value can equal|
-| `upper` | `double` | The lower bound (exclusive) of values that this double value can equal|
-| `name` (optional) | `String` | Name that can be used to retrieve the value during testing|
+| Name | Type | Description                                                            
+| :--- | --- |------------------------------------------------------------------------|
+| `lower` | `double` | The lower bound (inclusive) of values that this double value can equal |
+| `upper` | `double` | The upper bound (exclusive) of values that this double value can equal |
+| `name` (optional) | `String` | Name that can be used to retrieve the value during testing             |
 
 **Usage:**
 
@@ -114,11 +114,11 @@ public RandomInteger(int lower, int upper, [String name]) {
 
 **Parameters:**
 
-| Name | Type | Description
-| :--- | --- | --- |
-| `lower` | `int` | The lower bound (inclusive) of values that this random integer can equal|
-| `upper` | `int` | The lower bound (exclusive) of values that this random integer can equal|
-| `name` (optional) | `String` | Name that can be used to retrieve the value during testing|
+| Name | Type | Description                                                              
+| :--- | --- |--------------------------------------------------------------------------|
+| `lower` | `int` | The lower bound (inclusive) of values that this random integer can equal |
+| `upper` | `int` | The upper bound (exclusive) of values that this random integer can equal |
+| `name` (optional) | `String` | Name that can be used to retrieve the value during testing               |
 
 **Usage:**
 
@@ -139,18 +139,19 @@ randomness of this value and its range will be automatically tested.
 **Constructor:**
 
 ```java
-public RandomChar(char lower, char upper, [String name]) {
+public RandomChar(char lower, char upper, [String name], [boolean inclusiveUpper]) {
     ...
 }
 ```
 
 **Parameters:**
 
-| Name | Type | Description
-| :--- | --- | --- |
-| `lower` | `char` | The lower bound (inclusive) of values that this random character can equal|
-| `upper` | `char` | The lower bound (exclusive) of values that this random character can equal|
-| `name` (optional) | `String` | Name that can be used to retrieve the value during testing|
+| Name                       | Type     | Description                                                                
+|:---------------------------|----------|----------------------------------------------------------------------------|
+| `lower`                    | `char`   | The lower bound (inclusive) of values that this random character can equal |
+| `upper`                    | `char`   | The  upper (exclusive) of values that this random character can equal |
+| `name` (optional)          | `String` | Name that can be used to retrieve the value during testing                 |
+| `inclusiveUpper`           | `boolean`| Specifies if the upper bound should be included in the values this random character can equal|
 
 **Usage:**
 
@@ -178,12 +179,12 @@ public RandomDouble(double lower, double upper, [int precision], [String name]) 
 
 **Parameters:**
 
-| Name | Type | Description
-| :--- | --- | --- |
-| `lower` | `double` | The lower bound (inclusive) of values that this random double can equal|
-| `upper` | `double` | The lower bound (exclusive) of values that this random double can equal|
-| `precision` (optional) [WORK-IN-PROGRESS] | `int` | The number of decimal places that this random double should have|
-| `name` (optional) | `String` | Name that can be used to retrieve the value during testing|
+| Name | Type | Description                                                             
+| :--- | --- |-------------------------------------------------------------------------|
+| `lower` | `double` | The lower bound (inclusive) of values that this random double can equal |
+| `upper` | `double` | The upper bound (exclusive) of values that this random double can equal |
+| `precision` (optional) [WORK-IN-PROGRESS] | `int` | The number of decimal places that this random double should have        |
+| `name` (optional) | `String` | Name that can be used to retrieve the value during testing              |
 
 **Usage:**
 
