@@ -19,6 +19,20 @@ These types of questions usually have varying output and the output depends on t
 
 Once you extend the `BaseRandomTest` class, the framework automatically looks for Random clauses in the test sentence and checks whether each clause is within the specified range, and whether the clause is randomly generated. It does this by running the program multiple times and evaluating the distribution of random values in the output.
 
+### Randomness Algorithm
+
+To test randomness in code, the framework uses the following algorithm:
+- Run the student's submitted code R times to retrieve R values that their code generates to test for randomness
+- Sort these R numbers into N bins, where N = min( B, the potential range of values that the student code was supposed to generate )
+- Test each bin to see if the number of items sorted into it is in [ R/N - E%, R/N + E%] if so, consider the test for this bin passes
+- Count the number of bins whose test passed. If the overall acceptance rate is >= A, then the overall random test passes
+
+With the variables:
+- R = Number of random numbers generated
+- B = Number of bins
+- E = Margin of error (percentage)
+- A = Acceptance Rate (percentage)
+
 ## Example
 
 ### Question
