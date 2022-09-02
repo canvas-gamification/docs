@@ -54,7 +54,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ExampleTest extends BaseTest {
     public Clause[] testSentence() {
         TestOption.isInputTest = true;
-        TestOption.defaultInput = joinInputs("1", "1");
+        TestOption.defaultInput = "1 1 ";
 
         return new Clause[]{
                 new StringLiteral("This is a program to add two numbers."),
