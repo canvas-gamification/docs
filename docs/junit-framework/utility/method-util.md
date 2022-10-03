@@ -1,4 +1,4 @@
-# MethodUtil
+# MethodUtil [Deprecated]
 
 This class contains utility methods for working with static methods and testing questions involving methods.
 
