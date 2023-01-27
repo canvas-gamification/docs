@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    title: 'My Site',
-    tagline: 'Dinosaurs are cool',
+    title: 'Canvas Gamification JUnit Documentation',
+    tagline: 'Documentation is cool',
     url: 'https://your-docusaurus-test-site.com',
     baseUrl: '/docs/',
     onBrokenLinks: 'throw',
@@ -43,7 +43,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             navbar: {
-                title: 'My Site',
+                title: 'Canvas Gamification JUnit Documentation',
                 logo: {
                     alt: 'My Site Logo',
                     src: 'img/logo.svg',
@@ -51,11 +51,10 @@ const config = {
                 items: [
                     {
                         type: 'doc',
-                        docId: 'intro',
+                        docId: 'junit-framework/introduction/overview',
                         position: 'left',
-                        label: 'Tutorial',
+                        label: 'Documentation',
                     },
-                    {to: '/blog', label: 'Blog', position: 'left'},
                     {
                         href: 'https://github.com/facebook/docusaurus',
                         label: 'GitHub',
