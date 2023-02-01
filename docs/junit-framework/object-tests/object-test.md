@@ -152,7 +152,23 @@ If the field is not found, the test is failed. Note that the test will fail if t
 ### `public Object createArray(int length, Object[][][] arguments)`
 
 * Creates an array of length `length` of the type `objectClass`. Each item is initialized using the values in the 
-`arguments` array,
+`arguments` array, with the arguments array configured where the outermost array is each object to go into the 
+array, and the two inner arrays specify the constructor and values to use to initialize each object.
+* For example, if the arguments array is as follows, the method will attempt to initialize the first object using an
+  `(int, String)` constructor with the specified values, the second object with a `(String)` constructor, and the third
+object with the default constructor. 
+```java
+    {
+        {
+            {5, int.class},
+            {"Hello", String.class}
+        },
+        {
+            {"Hello World!", String.class}
+        },
+        {}
+    }
+```
 
 ### `public Object createArray(int length, Object[][] arguments) throws Throwable`
 
