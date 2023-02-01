@@ -90,28 +90,72 @@ called and `objectClass` contains the method `public static int add(int x, int y
 
 ### `public boolean hasModifier(Field field, String modifier)`
 
+* Checks if `field` has the modifier passed in the `modifier` parameter. If it does, it returns true, and if not it 
+returns false. 
+
 ### `public boolean hasModifier(String fieldName, String modifier)`
+
+* Checks if the field called `fieldName` has the modifier `modifier`. Note that the method first checks if the field
+exists in the `objectClass` class, and then if the field has the correct modifier. If the field has the modifier, it
+returns true, and false if not. 
 
 ### `public boolean hasModifier(Class<?>[] argsClass, String modifier)`
 
+* Checks if the `objectClass` constructor matching the passed `argsClass` array has the modifier `modifier`. Note that
+the method first checks if there is a constructor which matches the `argsClass` array, and then checks if the
+constructor has the correct modifier. If it has the modifier, it returns true, and false if not.
+
 ### `public boolean hasModifier(Constructor<?> constructor, String modifier)`
+
+* Checks if the passed `constructor` has the modifier `modifier`. Returns true if it does and false if not.
 
 ### `public boolean hasModifier(String modifier)`
 
+* Checks if the `objectClass` class has the modifier `modifier`. The method returns true if it does and false if not.
+
 ### `public boolean hasModifier(String methodName, Class<?>[] argsClass, String modifier)`
+
+* Checks if the method called `methodName` in `objectClass` with the parameters `argsClass` has the modifier `modifier`.
+The method returns true if it does, and false if it does not. Note that it also returns false if it fails to find a
+match for the method.
 
 ### `public boolean hasModifier(Method method, String modifier`
 
+* Checks if the method `method` has the modifier `modifier`. Returns true if it does and false if not.
+
 ### `public Object getFieldValue(Object testObject, String fieldName)`
+
+* Attempts to find the field `fieldName` in `testObject`. If the field is found, the
+value is returned in an Object wrapper. If the field is not found or is inaccessible, the test is failed.  
 
 ### `public void setFieldValue(Object testObject, Object value, String fieldName)`
 
+* Attempts to find the field `fieldName` in `testObject`. If successful, it sets the value of the field to `value`.
+If the field is not found, the test is failed. Note that the test will fail if the field is of the wrong type. 
+
 ### `public Object callMethod(String methodName, Object[][] arguments, String[] modifiers, Object object, Clause[] methodTestSentence, String incorrectMethodStructureErrorMessage) throws Throwable`
+
+* 
 
 ### `public Class<?> getObjectClass()`
 
+* Returns the `objectClass` field.
+
 ### `public Class<?> getObjectArrayClass()`
+
+* Returns the array class for the `objectClass` class.
 
 ### `public Object createArray(int length)`
 
+* Creates an empty array of length `length` of the type `objectClass`.
+
 ### `public Object createArray(int length, Object[][][] arguments)`
+
+* Creates an array of length `length` of the type `objectClass`. Each item is initialized using the values in the 
+`arguments` array,
+
+### `public Object createArray(int length, Object[][] arguments) throws Throwable`
+
+* Creates an array of length `length` of the type `objectClass`. Each item in the array is created using the 
+`objectClass` constructor that matches the specified parameter classes in `arguments`, and initialized to the value in
+`arguments`. Note that `agurments` is of the form `{paramaterValue, paramaterClass}`.
