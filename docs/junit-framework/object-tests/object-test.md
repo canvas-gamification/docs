@@ -135,7 +135,22 @@ If the field is not found, the test is failed. Note that the test will fail if t
 
 ### `public Object callMethod(String methodName, Object[][] arguments, String[] modifiers, Object object, Clause[] methodTestSentence, String incorrectMethodStructureErrorMessage) throws Throwable`
 
-* 
+* Attempts to call the method `methodName` in `objectClass` and return the output of that method. `callMethod` works by 
+attempting to find a method which matches the class parameters passed in `arguments`. If a match is found, it calls the 
+method with the parameter values passed in `arguments` and returns the output. The object returned will be, `callMethod` 
+will return the output of that method in an object wrapper, and null if the return type is void.
+* Parameters (* indicates a required parameter):
+  * `methodName` - the name of the method to call in `objectClass` * 
+  * `arguments` - the parameters and the values to call `methodName` with, where each parameter is of the form `
+  {parameterValue, parameterClass}`. If there are no parameters, this field is not required.
+  * `modifiers` - the modifiers which the method should have. If specified, the test will fail if the method called does
+  not have the correct modifiers. 
+  * `object` - the object of type `objectClass` that the method is called on. This is only not required if the method
+  called is static
+  * `methodTestSentence` - this parameter should be used to check any printed output from the method. If there is no
+  printed output, this value is not required, and `callMethod` checks that the method prints no output.
+  * `incorrectMethodStructureErrorMessage` - this can be used to specify an error message if the `methodTestSentence` is
+  used. If the printed output from the method is incorrect, this error message is shown to the student. 
 
 ### `public Class<?> getObjectClass()`
 
