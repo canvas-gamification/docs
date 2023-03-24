@@ -2,14 +2,20 @@
 
 Random clauses check if a set of outputs is uniformly distributed and can be used both in and out of Test Sentences.
 
-### Random Clauses Outside Test Sentences
+## Random Clauses in Test Sentences
+
+Random clauses can be used in a test sentence with any other combination of clauses. In this use case, the clause
+captures a print value based on the type of clause (int, char, etc.) and checks if the values are uniformly
+distributed (implying random generation of numbers). Typically, each clause has parameters to describe what values it
+should capture, and then checks for a uniform distribution across the set of values it captures from the console output.
+
+## Random Clauses Outside Test Sentences
 
 Random clauses can be used to check the randomness of a set of input values from anywhere in a test. This is done by
-declaring the random clause as you normally
-would, but then calling the `validateRandom(ArrayList)`  method receives an `ArrayList` of values of the same type as
-the clause, and
-executes the random check on this set of values. Note that to use this, the test writer must generate this `ArrayList`,
-and it must have **at least** 1000 values to ensure the check is accurate.
+declaring the random clause as you normally would with the desired bounds, but then calling
+the `validateRandom(ArrayList)` method on the clause. This method receives an `ArrayList` of values of the same type as
+the clause, and executes the random check on this set of values. Note that to use this, the test writer must generate
+this `ArrayList`, and it must have **at least** 1000 values to ensure the check is accurate.
 
 Example:
 
@@ -19,6 +25,8 @@ Example:
         RandomInteger randomInteger = new RandomInteger(0, 100) // Checking for values in range from 0 to 100
         randomInteger.validateRandom(randomValues);
 ```
+
+## Random Clauses
 
 ### `RandomInteger`
 
