@@ -2,13 +2,14 @@
 sidebar_position: 2
 ---
 
-# Clause Documentation
+# Basic Clause Documentation
 
 ## Literal Clauses
 
 ### `IntegerLiteral`
 
-This clause is intended to be used when there is an integer that is part of the program's output that you want to separate from the rest of the sentence.
+This clause is intended to be used when there is an integer that is part of the program's output that you want to
+separate from the rest of the sentence.
 
 **Constructor:**
 
@@ -20,10 +21,10 @@ public IntegerLiteral(int value, [String name]) {
 
 **Parameters:**
 
-| Name | Type | Description
-| :--- | --- | --- |
-| `value` | `int` | The integer that needs to be matched in the final sentence|
-| `name` (optional) | `String` | Name that can be used to retrieve the value during testing|
+| Name              | Type     | Description                                                |
+|:------------------|----------|------------------------------------------------------------|
+| `value`           | `int`    | The integer that needs to be matched in the final sentence |
+| `name` (optional) | `String` | Name that can be used to retrieve the value during testing |
 
 **Usage:**
 
@@ -38,7 +39,8 @@ public Clause[] testSentence() {
 
 ### `DoubleLiteral`
 
-This clause is intended to be used when there is a double/float that is part of the program's output that you want to separate from the rest of the sentence.
+This clause is intended to be used when there is a double/float that is part of the program's output that you want to
+separate from the rest of the sentence.
 
 **Constructor:**
 
@@ -50,10 +52,10 @@ public DoubleLiteral(double lower, double upper, [String name]) {
 
 **Parameters:**
 
-| Name | Type | Description                                                            
-| :--- | --- |------------------------------------------------------------------------|
-| `lower` | `double` | The lower bound (inclusive) of values that this double value can equal |
-| `upper` | `double` | The upper bound (exclusive) of values that this double value can equal |
+| Name              | Type     | Description                                                            |
+|:------------------|----------|------------------------------------------------------------------------|
+| `lower`           | `double` | The lower bound (inclusive) of values that this double value can equal |
+| `upper`           | `double` | The upper bound (exclusive) of values that this double value can equal |
 | `name` (optional) | `String` | Name that can be used to retrieve the value during testing             |
 
 **Usage:**
@@ -69,7 +71,8 @@ public Clause[] testSentence() {
 
 ### `StringLiteral`
 
-This clause is intended to be used when there is a constant section of text that is part of the program's output that you want to separate from the rest of the sentence.
+This clause is intended to be used when there is a constant section of text that is part of the program's output that
+you want to separate from the rest of the sentence.
 
 **Constructor:**
 
@@ -81,10 +84,10 @@ public StringLiteral(String text, [String name]) {
 
 **Parameters:**
 
-| Name | Type | Description
-| :--- | --- | --- |
-| `text` | `String` | The case-sensitive regex text that needs to be matched in the final sentence|
-| `name` (optional) | `String` | Name that can be used to retrieve the value during testing|
+| Name              | Type     | Description                                                                  |
+|:------------------|----------|------------------------------------------------------------------------------|
+| `text`            | `String` | The case-sensitive regex text that needs to be matched in the final sentence |
+| `name` (optional) | `String` | Name that can be used to retrieve the value during testing                   |
 
 **Usage:**
 
@@ -93,106 +96,6 @@ public Clause[] testSentence() {
     return new Clause[]{
         new StringLiteral("This is a simple test."),
         new StringLiteral("This is a simple test.", "exampleText")  // with name
-    };
-}
-```
-
-## Random Clauses
-
-### `RandomInteger`
-
-This clause is used in instances where an integer's value is determined randomly. Used with `BaseRandomTest`, the
-randomness of this value and its range will be automatically tested.
-
-**Constructor:**
-
-```java
-public RandomInteger(int lower, int upper, [String name]) {
-    ...
-}
-```
-
-**Parameters:**
-
-| Name | Type | Description                                                              
-| :--- | --- |--------------------------------------------------------------------------|
-| `lower` | `int` | The lower bound (inclusive) of values that this random integer can equal |
-| `upper` | `int` | The upper bound (exclusive) of values that this random integer can equal |
-| `name` (optional) | `String` | Name that can be used to retrieve the value during testing               |
-
-**Usage:**
-
-```java
-public Clause[] testSentence() {
-    return new Clause[]{
-        new RandomInteger(1, 5),  // a random integer that could equal 1, 2, 3, or 4
-        new RandomInteger(25, 75, "random integer")  // another example using the name parameter
-    };
-}
-```
-
-### `RandomChar`
-
-This clause is used in instances where a character's value is determined randomly. Used with `BaseRandomTest`, the
-randomness of this value and its range will be automatically tested.
-
-**Constructor:**
-
-```java
-public RandomChar(char lower, char upper, [String name], [boolean inclusiveUpper]) {
-    ...
-}
-```
-
-**Parameters:**
-
-| Name                       | Type     | Description                                                                
-|:---------------------------|----------|----------------------------------------------------------------------------|
-| `lower`                    | `char`   | The lower bound (inclusive) of values that this random character can equal |
-| `upper`                    | `char`   | The  upper (exclusive) of values that this random character can equal |
-| `name` (optional)          | `String` | Name that can be used to retrieve the value during testing                 |
-| `inclusiveUpper`           | `boolean`| Specifies if the upper bound should be included in the values this random character can equal|
-
-**Usage:**
-
-```java
-public Clause[] testSentence() {
-    return new Clause[]{
-        new RandomChar('a', 'z'),  // a random character that could equal anything between 'a'(inclusive) and 'z'(exclusive)
-        new RandomChar('A', 'Z', "random char")  // another example using the name parameter
-    };
-}
-```
-
-### `RandomDouble`
-
-This clause is used in instances where a double/float's value is determined randomly. Used with `BaseRandomTest`, the
-randomness of this value and its range will be automatically tested.
-
-**Constructor:**
-
-```java
-public RandomDouble(double lower, double upper, [int precision], [String name]) {
-    ...
-}
-```
-
-**Parameters:**
-
-| Name | Type | Description                                                             
-| :--- | --- |-------------------------------------------------------------------------|
-| `lower` | `double` | The lower bound (inclusive) of values that this random double can equal |
-| `upper` | `double` | The upper bound (exclusive) of values that this random double can equal |
-| `precision` (optional) [WORK-IN-PROGRESS] | `int` | The number of decimal places that this random double should have        |
-| `name` (optional) | `String` | Name that can be used to retrieve the value during testing              |
-
-**Usage:**
-
-```java
-public Clause[] testSentence() {
-    return new Clause[]{
-        new RandomDouble(11.9, 23.6),  // a random double that could equal anything between 11.9(inclusive) and 23.6(exclusive)
-        new RandomDouble(25, 899.9, "random double")  // another example using the name parameter
     };
 }
 ```
@@ -213,9 +116,9 @@ public NewLine([String name]) {
 
 **Parameters:**
 
-| Name | Type | Description
-| :--- | --- | --- |
-| `name` (optional) | `String` | Name that can be used to retrieve the value during testing|
+| Name              | Type     | Description                                                |
+|:------------------|----------|------------------------------------------------------------|
+| `name` (optional) | `String` | Name that can be used to retrieve the value during testing |
 
 > While the optional `name` parameter is supported, it is largely irrelevant for this utility class.
 
@@ -233,7 +136,8 @@ public Clause[] testSentence() {
 
 ### `PlaceHolder`
 
-A special clause that can have clause(s) "injected" in it's place. `PlaceHolder` is the primary way to use injections in the tested program.
+A special clause that can have clause(s) "injected" in its place. `PlaceHolder` is the primary way to use injections in
+the tested program.
 
 **Constructor:**
 
@@ -245,9 +149,9 @@ public PlaceHolder() {
 
 **Parameters:**
 
-| Name | Type | Description
-| :--- | --- | --- |
-| N/A | N/A | N/A |
+| Name | Type | Description |
+|:-----|------|-------------|
+| N/A  | N/A  | N/A         |
 
 **Usage:**
 
